@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+		<meta name="theme-color" content="#0b0f17">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<title>Roblox Friends Explorer</title>
+		<link rel="icon" href="favicon.ico" sizes="any">
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" href="https://woahitsjeebus.github.io/JUIL/assets/site.css">
+		<link rel="stylesheet" href="./assets/site.css">
+	</head>
+
+	<body>
+		<!-- ── Infinite draggable grid ──────────────────────────── -->
+		<div id="gridViewport">
+			<div id="gridSurface">
+				<div id="gridCursorGlow"></div>
+				<div id="gridGlow"></div>
+				<div id="gridOrigin"></div>
+				<div id="templateMount">
+					<section class="templateCard robloxApp" aria-labelledby="pageTitle">
+						<header class="appHero">
+							<div class="heroCopy">
+								<p class="eyebrow">Roblox Friends Explorer</p>
+								<h1 id="pageTitle">Lookup followers and following</h1>
+								<p class="lede">Enter a Roblox username or UserId to resolve the profile, load the current follower/following pages, and inspect the cards Roblox returns.</p>
+							</div>
+							<code class="inline versionBadge" id="versionCode">v-</code>
+						</header>
+
+						<form class="lookupForm" id="robloxLookupForm">
+							<label class="srOnly" for="robloxQuery">Roblox username or UserId</label>
+							<input id="robloxQuery" name="robloxQuery" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="Roblox or 1" />
+							<button id="robloxLookupButton" type="submit">Search</button>
+						</form>
+						<p class="helperText" id="lookupHint">Try a username like Roblox or a numeric UserId such as 1.</p>
+						<div class="statusBanner" id="lookupStatus" role="status" aria-live="polite">Ready for a lookup.</div>
+
+						<section class="profileSummary" id="profileSummary" hidden>
+							<div class="profileAvatarWrap">
+								<img id="profileAvatar" alt="" />
+							</div>
+							<div class="profileMeta">
+								<div class="profileNameRow">
+									<h2 id="profileDisplayName"></h2>
+									<span class="verifiedBadge" id="profileVerified" hidden>Verified</span>
+								</div>
+								<p id="profileUsername"></p>
+								<p id="profileId"></p>
+							</div>
+						</section>
+
+						<div class="statsGrid" aria-label="Roblox totals">
+							<article class="statCard"><span>Followers</span><strong id="followersCount">--</strong></article>
+							<article class="statCard"><span>Following</span><strong id="followingCount">--</strong></article>
+							<article class="statCard"><span>Followers loaded</span><strong id="followersLoadedCount">--</strong></article>
+							<article class="statCard"><span>Following loaded</span><strong id="followingLoadedCount">--</strong></article>
+						</div>
+
+						<div class="resultsGrid">
+							<section class="resultPanel" aria-labelledby="followersTitle">
+								<div class="sectionHead">
+									<h3 id="followersTitle">Followers</h3>
+									<span id="followersPageMeta">Waiting for results</span>
+								</div>
+								<div class="userCardGrid" id="followersGrid"></div>
+							</section>
+							<section class="resultPanel" aria-labelledby="followingTitle">
+								<div class="sectionHead">
+									<h3 id="followingTitle">Following</h3>
+									<span id="followingPageMeta">Waiting for results</span>
+								</div>
+								<div class="userCardGrid" id="followingGrid"></div>
+							</section>
+						</div>
+
+						<p class="pageNote" id="pageNote">The total counts are public, but the current follower/following list pages may require an authenticated Roblox session in this browser.</p>
+					</section>
+				</div>
+			</div>
+		</div>
+
+		<!-- ── Floating UI layer (tab bar only) ─────────────────── -->
+		<div id="gridContent">
+			<div class="tabsBar" style="width:100%;">
+				<nav class="tabs"><a class="tabBtn active" data-tab="home" href="./"><span class="tabDot"></span>Home</a><a class="tabBtn" data-tab="settings" href="https://woahitsjeebus.github.io/JUIL/pages/settings/"><span class="tabDot"></span>Settings</a><a class="tabBtn" data-tab="about" href="./pages/about/"><span class="tabDot"></span>About</a></nav>
+			</div>
+		</div>
+
+		<!-- ── Coordinate readout ──────────────────────────────── -->
+		<div id="coordPill">0, 0</div>
+
+		<script type="module">
+			import { initPage, loadVersionBadge, initGridDrag, initRobloxExplorer } from "./assets/site.js"
+			initPage("home")
+			loadVersionBadge()
+			initGridDrag()
+			initRobloxExplorer()
+		</script>
+	</body>
+</html>

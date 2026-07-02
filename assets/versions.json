@@ -1,0 +1,10 @@
+{
+	"current": "1.0.0.0",
+	"1.0": {
+		"1.0.0.0": [
+			"Template baseline created from NYPC repo.",
+			"Removed pension calendar functionality from the home page.",
+			"Kept draggable grid shell and shared JUIL styling integration."
+		]
+	}
+}
