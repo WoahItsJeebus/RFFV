@@ -26,7 +26,14 @@ The list pages use the paginated endpoints:
 
 ## Important Note
 
-Roblox currently allows the count endpoints to load publicly, but the followers and followings list endpoints may return `401 Authentication token is missing` unless the browser is signed into Roblox. When that happens, the page keeps the totals visible and shows a clear fallback message instead of failing.
+Roblox currently allows the count endpoints to load publicly, but the followers and followings list requests are blocked from a plain browser-only static site. An OAuth app by itself does not remove that CORS restriction. If you want the lists to work reliably, add a backend or proxy that talks to Roblox server-side.
+
+## Policy Pages
+
+- Privacy Policy: `/pages/privacy/`
+- Terms of Service: `/pages/terms/`
+
+If you later add Roblox OAuth support, enable the `openid` and `profile` scopes in the Roblox app and keep the Client Secret server-side only.
 
 ## Local Setup
 

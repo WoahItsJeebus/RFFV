@@ -349,8 +349,8 @@ export function initRobloxExplorer() {
 
 			const blockedLists = [followersResult, followingResult].some(result => result.status === "rejected")
 			if (blockedLists) {
-				setStatus(`Loaded totals for ${profile?.displayName || profile?.name || `User ${userId}`}. The list pages were not available in this browser session.`, "warn")
-				pageNote.textContent = "The total counts are public. If the follower/following lists are blank or show an error, Roblox is likely requiring an authenticated session for those page endpoints in this browser."
+				setStatus(`Loaded totals for ${profile?.displayName || profile?.name || `User ${userId}`}. The follower/following list endpoints are blocked in this browser-only setup.`, "warn")
+				pageNote.textContent = "The counts are public, but the list endpoints are not reliable from a static browser-only app. Use a server-side proxy or backend before relying on those pages."
 			} else {
 				setStatus(`Loaded ${followersUsers.length} followers and ${followingUsers.length} following for ${profile?.displayName || profile?.name || `User ${userId}`}.`, "success")
 				pageNote.textContent = "Showing the current page returned by Roblox for both followers and following."
@@ -358,7 +358,7 @@ export function initRobloxExplorer() {
 		} catch (error) {
 			if (lookupId !== activeLookup) return
 			setStatus(error instanceof Error ? error.message : "Lookup failed.", "error")
-			pageNote.textContent = "Try another username or numeric UserId. Counts are still public, but the list pages can require Roblox authentication."
+			pageNote.textContent = "Try another username or numeric UserId. The counts are still public, but direct browser requests to the list endpoints are blocked unless you add a server-side proxy."
 		}
 		finally {
 			if (lookupId === activeLookup) setBusy(false)
