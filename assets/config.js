@@ -6,6 +6,9 @@ export const JFSC_OAUTH = {
 }
 
 export const JFSC_NET = {
+	apiProxyBase: "/api/roblox",
+	apiProxyFallbackBase: "",
+
 	friendsBase: "https://friends.roblox.com",
 	friendsFallbackBase: "https://friends.roproxy.com",
 

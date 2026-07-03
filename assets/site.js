@@ -60,6 +60,13 @@ async function fetchJson(url, options = {}) {
 	return response.json()
 }
 
+function buildProxyUrls(path) {
+	return [
+		`${JFSC_NET.apiProxyBase}${path}`,
+		`${JFSC_NET.apiProxyFallbackBase}${path}`.replace(/\/\/+$/, ""),
+	].filter(Boolean)
+}
+
 async function fetchWithFallback(urls, options = {}) {
 	let lastError = null
 	for (const url of urls) {
@@ -79,6 +86,7 @@ async function resolveRobloxUserId(query, signal) {
 
 	const payload = JSON.stringify({ usernames: [trimmed], excludeBannedUsers: false })
 	const data = await fetchWithFallback([
+		...buildProxyUrls(`/v1/usernames/users`),
 		`${JFSC_NET.usersBase}/v1/usernames/users`,
 		`${JFSC_NET.usersFallbackBase}/v1/usernames/users`,
 	], {
@@ -95,6 +103,7 @@ async function resolveRobloxUserId(query, signal) {
 
 async function fetchRobloxProfile(userId, signal) {
 	return fetchWithFallback([
+		...buildProxyUrls(`/v1/users/${userId}`),
 		`${JFSC_NET.usersBase}/v1/users/${userId}`,
 		`${JFSC_NET.usersFallbackBase}/v1/users/${userId}`,
 	], { signal })
@@ -102,6 +111,7 @@ async function fetchRobloxProfile(userId, signal) {
 
 async function fetchRobloxCount(userId, kind, signal) {
 	const data = await fetchWithFallback([
+		...buildProxyUrls(`/v1/users/${userId}/${kind}/count`),
 		`${JFSC_NET.friendsBase}/v1/users/${userId}/${kind}/count`,
 		`${JFSC_NET.friendsFallbackBase}/v1/users/${userId}/${kind}/count`,
 	], { signal })
@@ -110,6 +120,7 @@ async function fetchRobloxCount(userId, kind, signal) {
 
 async function fetchRobloxPage(userId, kind, signal) {
 	return fetchWithFallback([
+		...buildProxyUrls(`/v1/users/${userId}/${kind}?limit=100&sortOrder=Asc&cursor=`),
 		`${JFSC_NET.friendsBase}/v1/users/${userId}/${kind}?limit=100&sortOrder=Asc&cursor=`,
 		`${JFSC_NET.friendsFallbackBase}/v1/users/${userId}/${kind}?limit=100&sortOrder=Asc&cursor=`,
 	], { signal })
@@ -119,6 +130,7 @@ async function fetchAvatars(userIds, signal) {
 	if (!userIds.length) return new Map()
 	try {
 		const data = await fetchWithFallback([
+			...buildProxyUrls(`/v1/users/avatar-headshot?userIds=${userIds.join(",")}&size=150x150&format=Png&isCircular=true`),
 			`${JFSC_NET.thumbnailsBase}/v1/users/avatar-headshot?userIds=${userIds.join(",")}&size=150x150&format=Png&isCircular=true`,
 			`${JFSC_NET.thumbnailsFallbackBase}/v1/users/avatar-headshot?userIds=${userIds.join(",")}&size=150x150&format=Png&isCircular=true`,
 		], { signal })

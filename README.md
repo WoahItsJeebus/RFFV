@@ -28,6 +28,14 @@ The list pages use the paginated endpoints:
 
 Roblox currently allows the count endpoints to load publicly, but the followers and followings list requests are blocked from a plain browser-only static site. An OAuth app by itself does not remove that CORS restriction. If you want the lists to work reliably, add a backend or proxy that talks to Roblox server-side.
 
+## Proxy Option
+
+This repo includes a small deployable edge proxy in [proxy/worker.js](proxy/worker.js). It is meant to be hosted on the same origin as the site so the browser can call `/api/roblox/...` without CORS issues.
+
+The proxy tries Roblox first and then roproxy as a fallback upstream.
+
+To use it, deploy the worker and the static site together, or mount the worker under the same domain with a route like `/api/roblox/*`.
+
 ## Policy Pages
 
 - Privacy Policy: `/pages/privacy/`
