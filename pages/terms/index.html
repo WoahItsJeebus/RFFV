@@ -26,8 +26,7 @@
 						<p>This site is provided as a static informational tool. Use it to look up Roblox usernames or UserIds and view the public follower/following data Roblox returns.</p>
 						<p><b>User responsibility:</b> you are responsible for complying with Roblox’s terms, API rules, and any applicable laws when using or extending this project.</p>
 						<p><b>Availability:</b> Roblox may rate-limit, block, or require authentication for some endpoints. The site may show partial results, fallback messages, or empty states when that happens.</p>
-						<p><b>OAuth note:</b> if you add Roblox OAuth support, configure the app with the appropriate redirect and policy URLs, and request only the scopes you need. For this project, that means <span class="mono">openid</span> and <span class="mono">profile</span> if you are using sign-in.</p>
-						<p><b>Client secret handling:</b> never expose the Client Secret in browser code or static files. Keep it on a trusted server or remove it entirely if you are not using a backend.</p>
+						<p><b>Proxy note:</b> if you add or change the proxy worker, keep the same-origin API route stable so the front end does not need direct cross-origin calls.</p>
 						<p><b>Changes:</b> these terms may be updated when the app adds new data collection, authentication, or hosted services.</p>
 					</div>
 				</section>

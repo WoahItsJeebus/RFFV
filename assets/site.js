@@ -61,10 +61,7 @@ async function fetchJson(url, options = {}) {
 }
 
 function buildProxyUrls(path) {
-	return [
-		`${JFSC_NET.apiProxyBase}${path}`,
-		`${JFSC_NET.apiProxyFallbackBase}${path}`.replace(/\/\/+$/, ""),
-	].filter(Boolean)
+	return [`${JFSC_NET.apiProxyBase}${path}`].filter(Boolean)
 }
 
 async function fetchWithFallback(urls, options = {}) {
@@ -87,8 +84,6 @@ async function resolveRobloxUserId(query, signal) {
 	const payload = JSON.stringify({ usernames: [trimmed], excludeBannedUsers: false })
 	const data = await fetchWithFallback([
 		...buildProxyUrls(`/v1/usernames/users`),
-		`${JFSC_NET.usersBase}/v1/usernames/users`,
-		`${JFSC_NET.usersFallbackBase}/v1/usernames/users`,
 	], {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -104,16 +99,12 @@ async function resolveRobloxUserId(query, signal) {
 async function fetchRobloxProfile(userId, signal) {
 	return fetchWithFallback([
 		...buildProxyUrls(`/v1/users/${userId}`),
-		`${JFSC_NET.usersBase}/v1/users/${userId}`,
-		`${JFSC_NET.usersFallbackBase}/v1/users/${userId}`,
 	], { signal })
 }
 
 async function fetchRobloxCount(userId, kind, signal) {
 	const data = await fetchWithFallback([
 		...buildProxyUrls(`/v1/users/${userId}/${kind}/count`),
-		`${JFSC_NET.friendsBase}/v1/users/${userId}/${kind}/count`,
-		`${JFSC_NET.friendsFallbackBase}/v1/users/${userId}/${kind}/count`,
 	], { signal })
 	return Number(data?.count ?? NaN)
 }
@@ -121,8 +112,6 @@ async function fetchRobloxCount(userId, kind, signal) {
 async function fetchRobloxPage(userId, kind, signal) {
 	return fetchWithFallback([
 		...buildProxyUrls(`/v1/users/${userId}/${kind}?limit=100&sortOrder=Asc&cursor=`),
-		`${JFSC_NET.friendsBase}/v1/users/${userId}/${kind}?limit=100&sortOrder=Asc&cursor=`,
-		`${JFSC_NET.friendsFallbackBase}/v1/users/${userId}/${kind}?limit=100&sortOrder=Asc&cursor=`,
 	], { signal })
 }
 
@@ -131,8 +120,6 @@ async function fetchAvatars(userIds, signal) {
 	try {
 		const data = await fetchWithFallback([
 			...buildProxyUrls(`/v1/users/avatar-headshot?userIds=${userIds.join(",")}&size=150x150&format=Png&isCircular=true`),
-			`${JFSC_NET.thumbnailsBase}/v1/users/avatar-headshot?userIds=${userIds.join(",")}&size=150x150&format=Png&isCircular=true`,
-			`${JFSC_NET.thumbnailsFallbackBase}/v1/users/avatar-headshot?userIds=${userIds.join(",")}&size=150x150&format=Png&isCircular=true`,
 		], { signal })
 		const map = new Map()
 		for (const item of data?.data || []) {

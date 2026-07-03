@@ -27,7 +27,7 @@
 						<p><b>What may be processed:</b> the username or UserId you enter, the resolved Roblox profile data, follower/following totals, and the page of follower/following results returned by Roblox.</p>
 						<p><b>What is not intentionally stored:</b> the site does not maintain a local account system, and it does not intentionally collect payment data, passwords, or other sensitive personal information.</p>
 						<p><b>Third-party services:</b> the app may request data from Roblox endpoints and load shared site assets from JUIL. Any data returned by Roblox is governed by Roblox’s own policies and your Roblox session state.</p>
-						<p><b>OAuth note:</b> if you later add Roblox OAuth support in a backend, keep the Client Secret server-side only. The browser should only know the Client ID and the requested scopes, such as <span class="mono">openid</span> and <span class="mono">profile</span>.</p>
+						<p><b>Proxy note:</b> if you deploy the proxy worker, keep any upstream secrets or routing rules server-side only. The browser should only call the public same-origin API route.</p>
 						<p><b>Policy updates:</b> this page should be updated if the app starts storing data, analytics, or account integrations beyond the current lookup flow.</p>
 					</div>
 				</section>
